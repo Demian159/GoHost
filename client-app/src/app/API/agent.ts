@@ -1,31 +1,70 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
+import { history } from "../..";
 import { Activity } from "../modules/activity";
+import { ServerError } from "../modules/serverError";
+import { store } from "../stores/store";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
-        setTimeout(resolve, delay)      
-    })  
+        setTimeout(resolve, delay)
+    })
+}
+
+interface dataResponseType{
+    errors: any[]
 }
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 axios.interceptors.response.use(async response => {
-    try {
-        await sleep(2000);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return await Promise.reject(error);
-    }   
+    await sleep(2000);
+    return response;
+}, (error: AxiosError) => {
+    const { data, status, config } = error.response!;
+    const dataR = data as dataResponseType;
+    switch (status) {
+        case 400:
+            if (typeof dataR === 'string') {
+                toast.error(dataR);
+            }
+            if (config.method === 'get' && dataR.errors.hasOwnProperty('id')) {
+                history.push('/not-found');
+            }
+            if (dataR.errors) {
+                const modalStateErrors = [];
+                for (const key in dataR.errors){
+                    if(dataR.errors[key]){
+                        modalStateErrors.push(dataR.errors[key])
+                    }
+                }
+                throw modalStateErrors.flat();
+            } 
+            break;
+        case 401:
+            toast.error('unauthorised');
+            break;
+        case 404:
+            history.push('/not-found');
+            break;
+        case 500:
+            const dataS = data as ServerError;
+            store.commonStore.setServerError(dataS);
+            history.push('/server-error')
+            break;
+
+        default:
+            break;
+    }
 })
 
-const responseBody = <T> (response: AxiosResponse<T>) => response.data;
+const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
-const request = { 
-    get: <T> (url: string) => axios.get<T>(url).then(responseBody),
-    post: <T> (url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
-    put: <T> (url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
-    del: <T> (url: string) => axios.delete<T>(url).then(responseBody)
+const request = {
+    get: <T>(url: string) => axios.get<T>(url).then(responseBody),
+    post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
+    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+    del: <T>(url: string) => axios.delete<T>(url).then(responseBody)
 }
 
 const Activities = {
