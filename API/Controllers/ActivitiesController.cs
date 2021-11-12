@@ -5,6 +5,7 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Application.Activities;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
