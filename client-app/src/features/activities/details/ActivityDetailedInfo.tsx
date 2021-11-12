@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
 import React from 'react'
 import {Segment, Grid, Icon} from 'semantic-ui-react'
-import { Activity } from '../../../app/modules/activity';
+import { Activity } from '../../../app/models/activity';
 
 interface Props {
     activity: Activity

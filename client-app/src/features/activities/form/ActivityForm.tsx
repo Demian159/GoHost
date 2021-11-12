@@ -13,7 +13,7 @@ import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
-import { Activity } from "../../../app/modules/activity";
+import { Activity } from "../../../app/models/activity";
 
 
 export default observer(function ActivityForm() {

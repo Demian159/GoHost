@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react'
 import { Link } from 'react-router-dom';
 import {Button, Header, Item, Segment, Image} from 'semantic-ui-react'
-import { Activity } from '../../../app/modules/activity';
+import { Activity } from '../../../app/models/activity';
 
 
 const activityImageStyle = {

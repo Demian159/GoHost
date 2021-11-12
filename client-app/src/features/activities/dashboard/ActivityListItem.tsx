@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { Button, Icon, Item, Segment, SegmentGroup } from "semantic-ui-react";
-import { Activity } from "../../../app/modules/activity";
+import { Activity } from "../../../app/models/activity";
 
 interface Props {
     activity: Activity
