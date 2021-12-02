@@ -11,7 +11,7 @@ export default observer(function RegisterForm() {
 
     return (
         <Formik
-            initialValues={{ displayName: '', username: '', email: '', password: "", error: null }}
+            initialValues={{ displayName: '', username: '', email: '', password: '', error: null }}
             onSubmit={(values, { setErrors }) => userStore.register(values).catch(error =>
                 setErrors({ error }))}
             validationSchema={Yup.object({
@@ -30,8 +30,7 @@ export default observer(function RegisterForm() {
                     <MyTextInput name='password' placeholder='Password' type='password' />
                     <ErrorMessage
                         name='error' render={() =>
-                            <ValidationErrors errors={errors.error} />
-                        }
+                            <ValidationErrors errors={errors.error} />}
                     />
                     <Button disabled={!isValid || !dirty || isSubmitting}
                         loading={isSubmitting} positive content='Register' type='submit' fluid />
