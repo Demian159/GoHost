@@ -10,7 +10,7 @@ export default observer(function Navbar() {
             <Container>
                 <Menu.Item as={NavLink} to='/' exact header>
                     <img src="/assets/logo.png" alt="logo" style={{ marginRight: '10px' }} />
-                    Reactivities
+                    GoHost
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/activities' name="Activities" />
                 <Menu.Item as={NavLink} to='/errors' name="Errors" />
