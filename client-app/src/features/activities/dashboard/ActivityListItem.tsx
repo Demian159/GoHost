@@ -24,19 +24,19 @@ export default function ActivityListItem({ activity }: Props) {
                             }</Item.Header>
                             <Item.Description>
                                 Hosted by 
-                                <Link to={`/profiles/${activity.hostUsername}`} >{activity.host?.displayName}</Link>
+                                <Link to={`/profiles/${activity.hostUsername}`} >{" " + activity.host?.displayName}</Link>
                             </Item.Description>
                             {activity.isHost && (
                                 <Item.Description>
                                     <Label basic color='orange'>
-                                        You are hosting this activity
+                                        You are hosting
                                     </Label>
                                 </Item.Description>
                             )}
                             {activity.isGoing && !activity.isHost && (
                                 <Item.Description>
                                     <Label basic color='green'>
-                                        You are going this activity
+                                        You are going
                                     </Label>
                                 </Item.Description>
                             )}

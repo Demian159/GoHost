@@ -6,6 +6,8 @@ import { store } from "./store";
 
 export default class UserStore {
     user: User | null = null;
+    fbAccessToken: string | null = null;
+    fbLoading = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -28,24 +30,29 @@ export default class UserStore {
     }
 
     logout = () => {
-      store.commonStore.setToken(null);
-      window.localStorage.removeItem('jwt');
-      this.user = null;
-      history.push('/');
+        store.commonStore.setToken(null);
+        window.localStorage.removeItem('jwt');
+        this.user = null;
+        history.push('/');
     }
 
     getUser = async () => {
-      try {
-          const user = await agent.Account.current();
-          runInAction(() => this.user = user);
-      } catch (error) {
-          console.log(error);
-      }
+        try {
+            const user = await agent.Account.current();
+            runInAction(() => this.user = user);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     register = async (creds: UserFormValues) => {
         try {
+            console.log("userStore register");
+            console.log("creds");
+            console.log(creds);
             const user = await agent.Account.register(creds);
+            console.log("user");
+            console.log(user);
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
             history.push('/activities');
@@ -62,5 +69,38 @@ export default class UserStore {
     setDisplayName = (name: string) => {
         if (this.user) this.user.displayName = name;
     }
-    
+
+    getFacebookLoginStatus = async () => {
+        window.FB.getLoginStatus(response => {
+            if (response.status === 'connected') {
+                this.fbAccessToken = response.authResponse.accessToken;
+            }
+        })
+    }
+
+
+    facebookLogin = () => {
+        this.fbLoading = true;
+        const apiLogin = (accessToken: string) => {
+            agent.Account.fbLogin(accessToken).then(user => {
+                store.commonStore.setToken(user.token);
+                runInAction(() => {
+                    this.user = user;
+                    this.fbLoading = false;
+                })
+                history.push('/activities');
+            }).catch(error => {
+                console.log(error);
+                runInAction(() => this.fbLoading = false);
+            })
+        }
+        if (this.fbAccessToken) {
+            apiLogin(this.fbAccessToken);
+        } else {
+            window.FB.login(response => {
+                apiLogin(response.authResponse.accessToken);
+            }, { scope: 'public_profile,email' })
+        }
+    }
+
 }
