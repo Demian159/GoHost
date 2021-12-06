@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Header, Segment, Image, Button, Divider } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
@@ -31,8 +30,8 @@ export default observer(function HomePage() {
                             Register!
                         </Button>
                         <Divider horizontal inverted>Or</Divider>
-                        <Button 
-                        loading={userStore.fbLoading}
+                        <Button
+                            loading={userStore.fbLoading}
                             size='huge'
                             inverted
                             color='facebook'
