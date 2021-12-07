@@ -7,6 +7,8 @@ Its a multi-project ASP.NET Core solution that is built using Clean Architecture
 
 The client side its build using React 17 and Typescript with Semantic UI.
 
+Published in https://go-host.herokuapp.com/
+
 
 
 
