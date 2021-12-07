@@ -3,11 +3,11 @@
 
 GoHost is a simple social network where you can host and join events from your city. You can create and join activities, follow other users and chat with them about the event in real time.
 
-Its a multi-project ASP.NET Core solution that is built using Clean Architecture, the CQRS and Mediator pattern and diverse other techniques getting an ‘A’ rating for security from securityheaders.com. 
+Its a multi-project ASP.NET Core solution that is built using Clean Architecture, the CQRS and Mediator pattern and diverse other techniques that earn an ‘A’ rating for security from securityheaders.com. 
 
 The client side its build using React 17 and Typescript with Semantic UI.
 
-Published in https://go-host.herokuapp.com/
+https://go-host.herokuapp.com/
 
 
 
