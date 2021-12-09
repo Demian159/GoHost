@@ -17,6 +17,7 @@ https://go-host.herokuapp.com/
 ## Features
 
 - Register and Login
+- Email verification
 - Customize your own profile
 - Upload and crop profile pictures
 - Create and join activities
